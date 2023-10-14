@@ -10,7 +10,7 @@ import { Lazy } from '../utils/lazy';
 import { Command } from './commandManager';
 
 export class TSServerRequestCommand implements Command {
-	public readonly id = 'typescript.tsserverRequest';
+	public readonly id = 'typescript_copy.tsserverRequest';
 
 	public constructor(
 		private readonly lazyClientHost: Lazy<TypeScriptServiceClientHost>
@@ -36,6 +36,7 @@ export class TSServerRequestCommand implements Command {
 			'completionInfo'
 		];
 
+		// @ts-ignore
 		if (!allowList.includes(requestID)) { return; }
 		return this.lazyClientHost.value.serviceClient.execute(requestID, args, token, config);
 	}

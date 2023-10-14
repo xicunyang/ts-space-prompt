@@ -8,7 +8,7 @@ import { isTypeScriptDocument } from '../configuration/languageIds';
 import { Command } from './commandManager';
 
 export class LearnMoreAboutRefactoringsCommand implements Command {
-	public static readonly id = '_typescript.learnMoreAboutRefactorings';
+	public static readonly id = '_typescript_copy.learnMoreAboutRefactorings';
 	public readonly id = LearnMoreAboutRefactoringsCommand.id;
 
 	public execute() {

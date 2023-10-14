@@ -10,7 +10,7 @@ import { openProjectConfigForFile, ProjectType } from '../tsconfig';
 import { Command } from './commandManager';
 
 export class TypeScriptGoToProjectConfigCommand implements Command {
-	public readonly id = 'typescript.goToProjectConfig';
+	public readonly id = 'typescript_copy.goToProjectConfig';
 
 	public constructor(
 		private readonly activeJsTsEditorTracker: ActiveJsTsEditorTracker,
@@ -26,7 +26,7 @@ export class TypeScriptGoToProjectConfigCommand implements Command {
 }
 
 export class JavaScriptGoToProjectConfigCommand implements Command {
-	public readonly id = 'javascript.goToProjectConfig';
+	public readonly id = 'javascript_copy.goToProjectConfig';
 
 	public constructor(
 		private readonly activeJsTsEditorTracker: ActiveJsTsEditorTracker,

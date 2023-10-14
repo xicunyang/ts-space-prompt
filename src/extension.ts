@@ -29,8 +29,6 @@ export function activate(
 ): Api {
 	const pluginManager = new PluginManager();
 	context.subscriptions.push(pluginManager);
-	console.log('xxxxxxx');
-
 	const commandManager = new CommandManager();
 	context.subscriptions.push(commandManager);
 

@@ -111,7 +111,7 @@ export function create(
 	const toDispose: vscode.Disposable[] = [];
 
 	const item = new ExcludeHintItem(client.telemetryReporter);
-	toDispose.push(vscode.commands.registerCommand('js.projectStatus.command', () => {
+	toDispose.push(vscode.commands.registerCommand('js.projectStatus.command_copy', () => {
 		if (item.configFileName) {
 			onConfigureExcludesSelected(client, item.configFileName);
 		}

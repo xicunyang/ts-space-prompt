@@ -276,10 +276,6 @@ export class ElectronServiceProcessFactory implements TsServerProcessFactory {
 		if (useIpc) {
 			runtimeArgs.push('--useNodeIpc');
 		}
-
-
-		console.log('tsServerPath:::', tsServerPath);
-
 		const childProcess = execPath ?
 			child_process.spawn(execPath, [...execArgv, tsServerPath, ...runtimeArgs], {
 				shell: true,

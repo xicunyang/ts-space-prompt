@@ -45,8 +45,8 @@ namespace IntellisenseState {
 
 export class IntellisenseStatus extends Disposable {
 
-	public readonly openOpenConfigCommandId = '_typescript.openConfig';
-	public readonly createOrOpenConfigCommandId = '_typescript.createOrOpenConfig';
+	public readonly openOpenConfigCommandId = '_typescript_copy.openConfig';
+	public readonly createOrOpenConfigCommandId = '_typescript_copy.createOrOpenConfig';
 
 	private _statusItem?: vscode.LanguageStatusItem;
 

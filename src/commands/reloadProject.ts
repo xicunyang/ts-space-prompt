@@ -8,7 +8,7 @@ import { Lazy } from '../utils/lazy';
 import { Command } from './commandManager';
 
 export class ReloadTypeScriptProjectsCommand implements Command {
-	public readonly id = 'typescript.reloadProjects';
+	public readonly id = 'typescript_copy.reloadProjects';
 
 	public constructor(
 		private readonly lazyClientHost: Lazy<TypeScriptServiceClientHost>
@@ -20,7 +20,7 @@ export class ReloadTypeScriptProjectsCommand implements Command {
 }
 
 export class ReloadJavaScriptProjectsCommand implements Command {
-	public readonly id = 'javascript.reloadProjects';
+	public readonly id = 'javascript_copy.reloadProjects';
 
 	public constructor(
 		private readonly lazyClientHost: Lazy<TypeScriptServiceClientHost>

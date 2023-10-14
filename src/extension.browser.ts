@@ -40,8 +40,11 @@ class StaticVersionProvider implements ITypeScriptVersionProvider {
 	get defaultVersion() { return this._version; }
 	get bundledVersion() { return this._version; }
 
+	// @ts-ignore
 	readonly globalVersion = undefined;
+	// @ts-ignore
 	readonly localVersion = undefined;
+	// @ts-ignore
 	readonly localVersions = [];
 }
 

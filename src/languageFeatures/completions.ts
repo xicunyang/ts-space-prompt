@@ -365,6 +365,7 @@ class MyCompletionItem extends vscode.CompletionItem {
 
 	private getRangeFromReplacementSpan(tsEntry: Proto.CompletionEntry, completionContext: CompletionContext) {
 		if (!tsEntry.replacementSpan) {
+			// @ts-ignore
 			return;
 		}
 
@@ -532,7 +533,7 @@ function getScriptKindDetails(tsEntry: Proto.CompletionEntry,): string | undefin
 
 
 class CompletionAcceptedCommand implements Command {
-	public static readonly ID = '_typescript.onCompletionAccepted';
+	public static readonly ID = '_typescript.onCompletionAccepted_copy';
 	public readonly id = CompletionAcceptedCommand.ID;
 
 	public constructor(
@@ -595,7 +596,7 @@ class ApplyCompletionCommand implements Command {
 }
 
 class ApplyCompletionCodeActionCommand implements Command {
-	public static readonly ID = '_typescript.applyCompletionCodeAction';
+	public static readonly ID = '_typescript.applyCompletionCodeAction_copy';
 	public readonly id = ApplyCompletionCodeActionCommand.ID;
 
 	public constructor(
@@ -706,8 +707,6 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 		const line = document.lineAt(position.line);
 		const completionConfiguration = CompletionConfiguration.getConfigurationForResource(this.language.id, document.uri);
 
-		console.log('this.shouldTrigger(context, line, position, completionConfiguration):::', this.shouldTrigger(context, line, position, completionConfiguration));
-
 		// if (!this.shouldTrigger(context, line, position, completionConfiguration)) {
 		// 	return undefined;
 		// }
@@ -723,16 +722,12 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 
 		await this.client.interruptGetErr(() => this.fileConfigurationManager.ensureConfigurationForDocument(document, token));
 
-
-		console.log('111');
-
-		// 在输入空格的时候，将triggerCharacter设置为undefined，将triggerKind设置为1就可以实现了，为什么会这样，需要再深入代码
 		const args: Proto.CompletionsRequestArgs = {
 			...typeConverters.Position.toFileLocationRequestArgs(file, position),
 			includeExternalModuleExports: completionConfiguration.autoImportSuggestions,
 			includeInsertTextCompletions: true,
-			// triggerCharacter: this.getTsTriggerCharacter(context),
-			triggerKind: 1,
+			triggerCharacter: this.getTsTriggerCharacter(context),
+			triggerKind: 2,
 		};
 
 		let isNewIdentifierLocation = true;
@@ -744,18 +739,15 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 		let response: ServerResponse.Response<Proto.CompletionInfoResponse> | undefined;
 		let duration: number | undefined;
 		if (this.client.apiVersion.gte(API.v300)) {
-			console.log('222');
-
 			const startTime = Date.now();
 			try {
 				response = await this.client.interruptGetErr(() => this.client.execute('completionInfo', args, token));
-				console.log('response:::', token, args, response);
-
 			} finally {
 				duration = Date.now() - startTime;
 			}
 
-			if (response.type !== 'response' || !response.body) {
+			// response.body.isGlobalCompletion：把全局提示关闭掉（在某一行点击空格后，会触发该逻辑）,还不确定是否会有其他影响，暂时先加上
+			if (response.type !== 'response' || !response.body || response.body.isGlobalCompletion) {
 				this.logCompletionsTelemetry(duration, response);
 				return undefined;
 			}
@@ -773,7 +765,6 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 			entries = response.body.entries;
 			metadata = response.metadata;
 		} else {
-			console.log('333');
 			const response = await this.client.interruptGetErr(() => this.client.execute('completions', args, token));
 			if (response.type !== 'response' || !response.body) {
 				return undefined;
@@ -782,9 +773,6 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 			entries = response.body;
 			metadata = response.metadata;
 		}
-
-		console.log('444');
-
 
 		// 转化为弹窗使用
 		const completionContext: CompletionContext = {
@@ -796,9 +784,6 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 			line: line.text,
 			completeFunctionCalls: completionConfiguration.completeFunctionCalls,
 		};
-
-		console.log('completionContext:::', completionContext);
-
 
 		let includesPackageJsonImport = false;
 		let includesImportStatementCompletion = false;
@@ -860,6 +845,7 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 		});
 	}
 
+	// @ts-ignore
 	private getTsTriggerCharacter(context: vscode.CompletionContext): Proto.CompletionsTriggerCharacter | undefined {
 		switch (context.triggerCharacter) {
 			case '@': { // Workaround for https://github.com/microsoft/TypeScript/issues/27321
@@ -869,7 +855,7 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 				return this.client.apiVersion.lt(API.v381) ? undefined : '#';
 			}
 			case ' ': {
-				return this.client.apiVersion.gte(API.v430) ? ' ' : undefined;
+				return this.client.apiVersion.gte(API.v430) ? undefined : undefined;
 			}
 			case '.':
 			case '"':

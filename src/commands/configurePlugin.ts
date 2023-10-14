@@ -7,7 +7,7 @@ import { PluginManager } from '../tsServer/plugins';
 import { Command } from './commandManager';
 
 export class ConfigurePluginCommand implements Command {
-	public readonly id = '_typescript.configurePlugin';
+	public readonly id = '_typescript_copy.configurePlugin';
 
 	public constructor(
 		private readonly pluginManager: PluginManager,

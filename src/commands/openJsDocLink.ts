@@ -17,7 +17,7 @@ export interface OpenJsDocLinkCommand_Args {
  * This is needed to avoid incorrectly rewriting uris.
  */
 export class OpenJsDocLinkCommand implements Command {
-	public static readonly id = '_typescript.openJsDocLink';
+	public static readonly id = '_typescript_copy.openJsDocLink';
 	public readonly id = OpenJsDocLinkCommand.id;
 
 	public async execute(args: OpenJsDocLinkCommand_Args): Promise<void> {
