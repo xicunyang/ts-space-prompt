@@ -223,6 +223,7 @@ class DiagnosticsTelemetryManager extends Disposable {
 	override dispose() {
 		super.dispose();
 		clearTimeout(this._timeout);
+		// @ts-ignore
 		clearInterval(this._telemetryEmitter);
 	}
 }

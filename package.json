@@ -27,7 +27,7 @@
     }
   },
   "engines": {
-    "vscode": "^1.30.0"
+    "vscode": "^1.78.0"
   },
   "icon": "media/icon.png",
   "categories": [
@@ -48,7 +48,7 @@
   "devDependencies": {
     "@types/node": "18.x",
     "@types/semver": "^5.5.0",
-    "@types/vscode": "^1.30.0"
+    "@types/vscode": "^1.78.0"
   },
   "scripts": {
     "watch": "tsc -watch -p ./",

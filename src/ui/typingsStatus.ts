@@ -29,6 +29,7 @@ export default class TypingsStatus extends Disposable {
 		super.dispose();
 
 		for (const timeout of this._acquiringTypings.values()) {
+			// @ts-ignore
 			clearTimeout(timeout);
 		}
 	}
@@ -49,6 +50,7 @@ export default class TypingsStatus extends Disposable {
 	private onEndInstallTypings(eventId: number): void {
 		const timer = this._acquiringTypings.get(eventId);
 		if (timer) {
+			// @ts-ignore
 			clearTimeout(timer);
 		}
 		this._acquiringTypings.delete(eventId);

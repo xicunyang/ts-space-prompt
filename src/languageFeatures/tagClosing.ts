@@ -35,6 +35,7 @@ class TagClosing extends Disposable {
 		this._disposed = true;
 
 		if (this._timeout) {
+			// @ts-ignore
 			clearTimeout(this._timeout);
 			this._timeout = undefined;
 		}
@@ -64,6 +65,7 @@ class TagClosing extends Disposable {
 		}
 
 		if (typeof this._timeout !== 'undefined') {
+			// @ts-ignore
 			clearTimeout(this._timeout);
 		}
 
