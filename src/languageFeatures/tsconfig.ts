@@ -16,7 +16,7 @@ function mapChildren<R>(node: jsonc.Node | undefined, f: (x: jsonc.Node) => R): 
 		: [];
 }
 
-const openExtendsLinkCommandId = '_typescript.openExtendsLink';
+const openExtendsLinkCommandId = '_typescript.openExtendsLink_copy';
 type OpenExtendsLinkCommandArgs = {
 	readonly resourceUri: vscode.Uri;
 	readonly extendsValue: string;

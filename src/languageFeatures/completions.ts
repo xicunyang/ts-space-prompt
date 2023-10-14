@@ -566,7 +566,7 @@ class CompletionAcceptedCommand implements Command {
  * Command fired when an completion item needs to be applied
  */
 class ApplyCompletionCommand implements Command {
-	public static readonly ID = '_typescript.applyCompletionCommand';
+	public static readonly ID = '_typescript.applyCompletionCommand_copy';
 	public readonly id = ApplyCompletionCommand.ID;
 
 	public constructor(
@@ -727,8 +727,14 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 			includeExternalModuleExports: completionConfiguration.autoImportSuggestions,
 			includeInsertTextCompletions: true,
 			triggerCharacter: this.getTsTriggerCharacter(context),
-			triggerKind: 2,
+			triggerKind: typeConverters.CompletionTriggerKind.toProtocolCompletionTriggerKind(context.triggerKind),
 		};
+
+		// 如果有字符，就取消提示
+		if(args.triggerCharacter) {
+			return undefined;
+		}
+		
 
 		let isNewIdentifierLocation = true;
 		let isIncomplete = false;
