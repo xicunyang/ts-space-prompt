@@ -1,7 +1,13 @@
-# Language Features for TypeScript and JavaScript files
+# Enter Space Give Prompt
 
-**Notice:** This extension is bundled with Visual Studio Code. It can be disabled but not uninstalled.
+**Notice:** This extension fork comes from the official vscode plugin: [typescript-language-features](https://github.com/microsoft/vscode/tree/main/extensions/typescript-language-features).
 
 ## Features
 
-See [TypeScript in Visual Studio Code](https://code.visualstudio.com/docs/languages/typescript) and [JavaScript in Visual Studio Code](https://code.visualstudio.com/docs/languages/javascript) to learn about the features of this extension.
+When you are writing a react component, this extension can provide you with more friendly prompts for props parameters.
+
+Pressing a space will give you the prompt.
+
+Demo Gif:
+
+![示例图](https://raw.githubusercontent.com/xicunyang/images/master/ts-props.gif)

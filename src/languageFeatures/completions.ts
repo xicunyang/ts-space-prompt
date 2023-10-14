@@ -730,12 +730,12 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 			triggerKind: typeConverters.CompletionTriggerKind.toProtocolCompletionTriggerKind(context.triggerKind),
 		};
 
-		// 如果有字符，就取消提示
-		if(args.triggerCharacter) {
+		// 如果有字符，就取消提示(for cloud ide)，多余展示
+		// 如果triggerKind === 1，就取消提示（for windows的ctrl+i，会重复）
+		if( args.triggerCharacter || args.triggerKind === 1) {
 			return undefined;
 		}
 		
-
 		let isNewIdentifierLocation = true;
 		let isIncomplete = false;
 		let isMemberCompletion = false;

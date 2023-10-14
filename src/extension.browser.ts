@@ -3,14 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import VsCodeTelemetryReporter from '@vscode/extension-telemetry';
 import * as vscode from 'vscode';
 import { Api, getExtensionApi } from './api';
 import { CommandManager } from './commands/commandManager';
 import { registerBaseCommands } from './commands/index';
 import { TypeScriptServiceConfiguration } from './configuration/configuration';
 import { BrowserServiceConfigurationProvider } from './configuration/configuration.browser';
-import { ExperimentationTelemetryReporter, IExperimentationTelemetryReporter } from './experimentTelemetryReporter';
+// import { ExperimentationTelemetryReporter, IExperimentationTelemetryReporter } from './experimentTelemetryReporter';
 import { AutoInstallerFs } from './filesystems/autoInstallerFs';
 import { MemFs } from './filesystems/memFs';
 import { createLazyClientHost, lazilyActivateClient } from './lazyClientHost';
@@ -67,14 +66,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<Api> {
 			vscode.Uri.joinPath(context.extensionUri, 'dist/browser/typescript/tsserver.web.js').toString(),
 			API.fromSimpleString('5.1.3')));
 
-	let experimentTelemetryReporter: IExperimentationTelemetryReporter | undefined;
-	const packageInfo = getPackageInfo(context);
-	if (packageInfo) {
-		const { aiKey } = packageInfo;
-		const vscTelemetryReporter = new VsCodeTelemetryReporter(aiKey);
-		experimentTelemetryReporter = new ExperimentationTelemetryReporter(vscTelemetryReporter);
-		context.subscriptions.push(experimentTelemetryReporter);
-	}
+	// let experimentTelemetryReporter: IExperimentationTelemetryReporter | undefined;
+	// const packageInfo = getPackageInfo(context);
+	// if (packageInfo) {
+	// 	const { aiKey } = packageInfo;
+	// 	const vscTelemetryReporter = new VsCodeTelemetryReporter(aiKey);
+	// 	experimentTelemetryReporter = new ExperimentationTelemetryReporter(vscTelemetryReporter);
+	// 	context.subscriptions.push(experimentTelemetryReporter);
+	// }
 
 	const logger = new Logger();
 
@@ -87,7 +86,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<Api> {
 		processFactory: new WorkerServerProcessFactory(context.extensionUri, logger),
 		activeJsTsEditorTracker,
 		serviceConfigurationProvider: new BrowserServiceConfigurationProvider(),
-		experimentTelemetryReporter,
+		experimentTelemetryReporter: undefined,
 		logger,
 	}, item => {
 		onCompletionAccepted.fire(item);

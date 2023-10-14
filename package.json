@@ -2,13 +2,12 @@
   "name": "ts-space-prompt",
   "description": "Enter a space to prompt for props",
   "displayName": "Enter Space Give Prompt",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "author": "xicunyang",
   "publisher": "xicunyang",
   "license": "MIT",
   "enabledApiProposals": [
-    "workspaceTrust",
-    "telemetryLogger"
+    "workspaceTrust"
   ],
   "capabilities": {
     "virtualWorkspaces": {
@@ -27,14 +26,13 @@
     }
   },
   "engines": {
-    "vscode": "^1.78.0"
+    "vscode": "^1.74.0"
   },
   "icon": "media/icon.png",
   "categories": [
     "Programming Languages"
   ],
   "dependencies": {
-    "@vscode/extension-telemetry": "^0.8.5",
     "@vscode/sync-api-client": "^0.7.2",
     "@vscode/sync-api-common": "^0.7.2",
     "@vscode/sync-api-service": "^0.7.3",
@@ -48,7 +46,7 @@
   "devDependencies": {
     "@types/node": "18.x",
     "@types/semver": "^5.5.0",
-    "@types/vscode": "^1.78.0"
+    "@types/vscode": "^1.74.0"
   },
   "scripts": {
     "watch": "tsc -watch -p ./",
