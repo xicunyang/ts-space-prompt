@@ -2,9 +2,9 @@
   "name": "ts-space-prompt",
   "description": "Enter a space to prompt for props",
   "displayName": "Enter Space Give Prompt",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "xicunyang",
-  "publisher": "xicunyang",
+  "publisher": "byted-xicunyang",
   "license": "MIT",
   "enabledApiProposals": [
     "workspaceTrust"

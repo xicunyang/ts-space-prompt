@@ -794,7 +794,16 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 		let includesPackageJsonImport = false;
 		let includesImportStatementCompletion = false;
 		const items: MyCompletionItem[] = [];
+		const requirePropsInsertText: string[] = [];
+		
 		for (const entry of entries) {
+			if(entry.kindModifiers === "" || entry.kindModifiers === "declare") {
+				if(entry.insertText) {
+					requirePropsInsertText.push(entry.insertText.replaceAll("$1", `$${requirePropsInsertText.length+1}`));
+				}else{
+					requirePropsInsertText.push(`${entry.name}`);
+				}
+			}
 			if (!shouldExcludeCompletionEntry(entry, completionConfiguration)) {
 				const item = new MyCompletionItem(position, document, entry, completionContext, metadata, this.client);
 				item.command = {
@@ -806,10 +815,40 @@ class TypeScriptCompletionItemProvider implements vscode.CompletionItemProvider<
 				includesPackageJsonImport = includesPackageJsonImport || !!entry.isPackageJsonImport;
 				includesImportStatementCompletion = includesImportStatementCompletion || !!entry.isImportStatementCompletion;
 			}
+
+			// const args: Proto.CompletionDetailsRequestArgs = {
+			// 	...typeConverters.Position.toFileLocationRequestArgs(file, position),
+			// 	entryNames: [
+			// 		entry.source || entry.data ? {
+			// 			name: entry.name,
+			// 			source: entry.source,
+			// 			data: entry.data,
+			// 		} : entry.name
+			// 	]
+			// };
+			// const requestToken = new vscode.CancellationTokenSource();
+			// const response = await this.client.interruptGetErr(() => this.client.execute('completionEntryDetails', args, requestToken.token));
+			// console.log('xxx response:::', response);
+			
+
 		}
 		if (duration !== undefined) {
 			this.logCompletionsTelemetry(duration, response, includesPackageJsonImport, includesImportStatementCompletion);
 		}
+
+		if(requirePropsInsertText?.length) {
+			// 填写所有必填项
+			const item = new MyCompletionItem(position, document, {
+				insertText: requirePropsInsertText.join(" "),
+				isSnippet: true,
+				// @ts-ignore
+				kind: "keyword",
+				name: "Fill in all required fields",
+			}, completionContext, metadata, this.client);
+
+			items.unshift(item);
+		}
+		
 		return new vscode.CompletionList(items, isIncomplete);
 	}
 

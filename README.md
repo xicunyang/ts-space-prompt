@@ -10,4 +10,13 @@ Pressing a space will give you the prompt.
 
 Demo Gif:
 
-![示例图](https://raw.githubusercontent.com/xicunyang/images/master/ts-props.gif)
+
+> 🙋🏻‍♀️ 1. Enter space give prompts
+
+![示例图](https://raw.githubusercontent.com/xicunyang/images/master/ts-props-new.gif)
+
+> 🙋🏻‍♀️ 2. Fill in all required fields
+
+![示例图](https://raw.githubusercontent.com/xicunyang/images/master/fill-all.gif)
+
+
